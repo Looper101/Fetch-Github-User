@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:github_user/model/user.dart';
 
 class ProfilePage extends StatelessWidget {
   static final id = 'routeid';
+
   @override
   Widget build(BuildContext context) {
     final User user = ModalRoute.of(context).settings.arguments;
@@ -17,6 +19,9 @@ class ProfilePage extends StatelessWidget {
               height: 600,
               width: double.infinity,
               child: CachedNetworkImage(
+                progressIndicatorBuilder: (context, string, dlp) {
+                  return CupertinoActivityIndicator();
+                },
                 imageUrl: user.imageUrl,
                 fit: BoxFit.cover,
               ),

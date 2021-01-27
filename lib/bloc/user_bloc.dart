@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
+import 'package:github_user/model/exception.dart';
 
 import '../repositories/users_repository.dart';
 import 'user_event.dart';
@@ -14,14 +17,17 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   ) async* {
     if (event is FetchGitUsers) {
       yield UserLoadInProgress();
+      yield* _mapFetchGitUserState();
+    }
+  }
 
-      try {
-        var result = await _userRepository.fetchUsers();
-        print(result);
-        yield UserLoadSuccess(users: result);
-      } catch (e) {
-        yield UserError(errorMessage: e.toString());
-      }
+  Stream<UserState> _mapFetchGitUserState() async* {
+    try {
+      var result = await _userRepository.fetchUsers();
+      print(result);
+      yield UserLoadSuccess(users: result);
+    } on SocketException {
+      yield UserError(errorMessage: NetworkException().errorExceptionMessage);
     }
   }
 

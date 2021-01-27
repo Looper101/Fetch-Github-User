@@ -7,14 +7,14 @@ import 'package:github_user/bloc/user_state.dart';
 import 'package:github_user/model/user.dart';
 import 'package:github_user/ui/profile_page.dart';
 
-class HomePage extends StatefulWidget {
+class Dash extends StatefulWidget {
   static String id = 'routeHome';
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _DashState createState() => _DashState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _DashState extends State<Dash> {
   void initState() {
     super.initState();
     BlocProvider.of<UserBloc>(context).add(FetchGitUsers());
@@ -60,49 +60,6 @@ class _HomePageState extends State<HomePage> {
           );
         }
 
-        if (state is UserError) {
-          // return Column(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Card(
-          //       color: Colors.black,
-          //       child: Padding(
-          //         padding: const EdgeInsets.all(16.0),
-          //         child: Column(
-          //           children: [
-          //             Center(
-          //               child: Text(
-          //                 state.errorMessage,
-          //                 style: TextStyle(fontSize: 25, color: Colors.white),
-          //               ),
-          //             ),
-          //             RaisedButton(
-          //               child: Text('Retry'),
-          //               onPressed: () {
-          //                 BlocProvider.of<UserBloc>(context)
-          //                     .add(FetchGitUsers());
-          //               },
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // );
-
-          return AlertDialog(
-            title: Text(state.errorMessage),
-            actions: [
-              FlatButton(
-                color: Colors.black,
-                child: Text('Retry'),
-                onPressed: () {
-                  BlocProvider.of<UserBloc>(context).add(FetchGitUsers());
-                },
-              )
-            ],
-          );
-        }
         if (state is UserInitial) {
           return Center(
             child: Text(
@@ -111,8 +68,19 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         }
+        if (state is UserLoadInProgress) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (state is UserError) {
+          return AlertDialog(
+            title: Text('Error status'),
+            content: Text(state.errorMessage),
+          );
+        }
 
-        return null;
+        return Container();
       }),
     );
   }
