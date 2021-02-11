@@ -5,7 +5,8 @@ import 'package:github_user/model/user.dart';
 
 class ProfilePage extends StatelessWidget {
   static final id = 'routeid';
-
+  ProfilePage({this.user});
+  final User user;
   @override
   Widget build(BuildContext context) {
     final User user = ModalRoute.of(context).settings.arguments;
@@ -46,7 +47,6 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-
             Positioned(
               bottom: 0,
               child: Container(
@@ -73,43 +73,9 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-
-            // Positioned(
-            //   left: 0,
-            //   bottom: 0,
-            //   right: 0,
-            //   child: Container(
-            //     height: 370,
-            //     width: 400,
-            //     decoration: BoxDecoration(
-            //       color: Colors.black,
-            //       borderRadius: BorderRadius.only(
-            //         topLeft: Radius.circular(30),
-            //         topRight: Radius.circular(30),
-            //       ),
-            //     ),
-            //     child: UserDetailSection(user),
-            //   ),
-            // ),
           ]),
         ),
       ),
     );
   }
-}
-
-Widget UserDetailSection(User user) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
-    child: Column(
-      children: [
-        Row(
-          children: [
-            Text(user.name.toUpperCase()),
-            Text(user.id.toString()),
-          ],
-        )
-      ],
-    ),
-  );
 }
