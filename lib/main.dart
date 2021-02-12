@@ -43,21 +43,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget build(BuildContext context) {
-    return Scaffold(
-        // floatingActionButton: FloatingActionButton(
-        //   backgroundColor: Colors.black12,
-        //   onPressed: () {
-        //     BlocProvider.of<UserBloc>(context).add(FetchGitUsers());
-        //   },
-        //   child: CircleAvatar(
-        //     backgroundColor: Colors.teal.shade600,
-        //     child: Icon(
-        //       Icons.replay,
-        //       color: Colors.black,
-        //     ),
-        //   ),
-        // ),
-        body: Dash());
+    return Scaffold(body: Dash());
   }
 }
 
